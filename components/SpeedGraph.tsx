@@ -13,7 +13,7 @@ export default function SpeedGraph({ data }: SpeedGraphProps) {
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">Live Speed Graph</h3>
-          <p className="text-sm text-slate-300">Download and upload values update live while the test is running.</p>
+          <p className="text-sm text-slate-300">Adaptive multi-stream rounds update live while the test is running.</p>
         </div>
       </div>
       <div className="h-80 w-full">

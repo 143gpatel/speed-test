@@ -46,7 +46,7 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       brand,
-      detail: detailParts.length ? detailParts.join(" • ") : null
+      detail: detailParts.length ? detailParts.join(" | ") : null
     });
   } catch {
     return NextResponse.json(

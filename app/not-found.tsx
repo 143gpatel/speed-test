@@ -21,12 +21,6 @@ export default function NotFound() {
           >
             Back to Dashboard
           </Link>
-          <Link
-            href="/history"
-            className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/10"
-          >
-            View History
-          </Link>
         </div>
       </section>
     </main>

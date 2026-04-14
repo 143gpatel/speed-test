@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Internet Speed Test Premium",
-  description: "Premium internet speed checker with history and live graph"
+  description: "Premium internet speed checker with live graph and adaptive tests"
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

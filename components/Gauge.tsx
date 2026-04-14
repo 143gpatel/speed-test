@@ -8,15 +8,18 @@ type GaugeProps = {
 };
 
 export default function Gauge({ value, label, unit = "Mbps", max = 200 }: GaugeProps) {
-  const safeValue = Math.min(Math.max(value, 0), max);
-  const percent = safeValue / max;
+  const dynamicMax = Math.max(max, Math.ceil(Math.max(value, max) / 50) * 50);
+  const safeValue = Math.min(Math.max(value, 0), dynamicMax);
+  const percent = safeValue / dynamicMax;
   const progress = Number((percent * 100).toFixed(1));
 
   return (
     <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-5 backdrop-blur-xl shadow-glow">
       <div className="mb-4 flex items-center justify-between">
         <p className="text-sm text-slate-300">{label}</p>
-        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-slate-300">Max {max} {unit}</span>
+        <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-slate-300">
+          Max {dynamicMax} {unit}
+        </span>
       </div>
       <div className="relative mx-auto h-56 w-56">
         <svg viewBox="0 0 220 180" className="h-full w-full">

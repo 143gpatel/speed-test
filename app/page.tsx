@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import Gauge from "@/components/Gauge";
 import SpeedGraph from "@/components/SpeedGraph";
@@ -71,6 +70,20 @@ export default function HomePage() {
         return "Ready to test";
     }
   }, [status]);
+  const loading = ["ping", "download", "upload"].includes(status);
+
+  const profileText = useMemo(() => {
+    if (status === "done") {
+      return "Adaptive complete";
+    }
+
+    if (loading) {
+      return "Adaptive running";
+    }
+
+    return "Adaptive ready";
+  }, [loading, status]);
+
   const pushPoint = (point: LivePoint) => {
     setGraphData((prev) => [...prev, point].slice(-14));
   };
@@ -110,7 +123,6 @@ export default function HomePage() {
       setError(err instanceof Error ? err.message : "Unknown error occurred.");
     }
   };
-  const loading = ["ping", "download", "upload"].includes(status);
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -125,10 +137,10 @@ export default function HomePage() {
                 Premium Internet Speed Test
               </p>
               <h1 className="text-3xl font-semibold tracking-tight sm:text-5xl">
-                Clean, accurate, and real-time speed analytics
+                Adaptive, stabilized speed analytics
               </h1>
               <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
-                Measure ping, download, and upload in one click with live charting and a refined dashboard experience.
+                Measure ping, download, and upload with longer multi-stream sampling for steadier, more accurate readings.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -139,18 +151,12 @@ export default function HomePage() {
               >
                 {loading ? statusText : "Start Speed Test"}
               </button>
-              <Link
-                href="/history"
-                className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-slate-100 transition hover:bg-white/10"
-              >
-                View History
-              </Link>
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
             <StatCard label="Status" value={statusText} subtext={error || "Everything is ready. Hit start to begin your test."} />
             <StatCard label="Ping" value={`${ping} ms`} subtext="Lower ping means better responsiveness" />
-            <StatCard label="Session" value={status === "done" ? "Completed" : "In Progress"} subtext="Runs directly in your browser" />
+            <StatCard label="Test profile" value={profileText} subtext="Longer adaptive rounds with multiple parallel streams" />
             <StatCard label="Internet brand" value={brandLabel} subtext={brandDetail || "Brand/ISP detected from your public network route"} />
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -184,12 +190,12 @@ export default function HomePage() {
       </section>
 
       <section className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <StatCard label="Download" value={`${download.toFixed(2)} Mbps`} subtext="Higher is better for streaming and downloads" />
-        <StatCard label="Upload" value={`${upload.toFixed(2)} Mbps`} subtext="Important for video calls and cloud backup" />
+            <StatCard label="Download" value={`${download.toFixed(2)} Mbps`} subtext="Stabilized final result for streaming and downloads" />
+            <StatCard label="Upload" value={`${upload.toFixed(2)} Mbps`} subtext="Stabilized final result for video calls and cloud backup" />
         <StatCard
           label="Notes"
-          value="Real-world test"
-          subtext="Powered by Cloudflare endpoints and browser-level measurements"
+          value="Adaptive test"
+          subtext="Powered by Cloudflare endpoints with longer multi-stream browser measurements"
         />
       </section>
     </main>
